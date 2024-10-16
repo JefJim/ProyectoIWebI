@@ -12,13 +12,13 @@ $especies = getEspecies();
 <body>
 
 <h2>Crear Árbol</h2>
-<form action="crear.php" method="POST" enctype="multipart/form-data">
+<form action="actions/crear_arbol.php" method="POST" enctype="multipart/form-data">
     <label for="especie">Especie:</label>
     <select name="especie" required>
         <option value="">Seleccione una especie</option>
         <?php
           foreach($especies as $id => $especie) {
-            echo "<option value=\"$id\">$especie</option>";
+            echo "<option value=\"$id\">$especie[nombre_comercial]</option>";
           }
           ?>
     </select><br><br>
@@ -38,6 +38,9 @@ $especies = getEspecies();
     <label for="foto">Foto del árbol:</label>
     <input type="file" name="foto" accept="image/*" required><br><br>
 
+    <label for="tamano">Tamaño: </label>
+    <input type="text" name="tamano" required><br><br>
+
     <button type="submit">Guardar Árbol</button>
 </form>
 
@@ -49,27 +52,33 @@ $especies = getEspecies();
         <th>Estado</th>
         <th>Precio</th>
         <th>Foto</th>
+        <th>Tamaño</th>
         <th>Acciones</th>
     </tr>
 
     <?php
-    $query = $pdo->query("SELECT arboles.*, especies.nombre_comercial 
+     $sql = "SELECT arboles.*, especies.nombre_comercial 
                           FROM arboles 
-                          JOIN especies ON arboles.especie = especies.id");
-
-    while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+                          JOIN especies ON arboles.especie = especies.id";
+        try {
+        $conn = getConnection();
+        mysqli_query($conn, $sql);
         echo "<tr>
-            <td>{$row['nombre_comercial']}</td>
-            <td>{$row['ubicacion']}</td>
-            <td>" . ($row['estado'] ? 'Vendido' : 'Disponible') . "</td>
-            <td>{$row['precio']}</td>
-            <td><img src='uploads/{$row['foto']}' width='100'></td>
-            <td>
-                <a href='editar.php?id={$row['id']}'>Editar</a> |
-                <a href='eliminar.php?id={$row['id']}'>Eliminar</a>
-            </td>
-        </tr>";
-    }
+                <td>{$row['nombre_comercial']}</td>
+                <td>{$row['ubicacion']}</td>
+                <td>" . ($row['estado'] ? 'Vendido' : 'Disponible') . "</td>
+                <td>{$row['precio']}</td>
+                <td><img src='uploads/{$row['foto']}' width='100'></td>
+                <td>{$row['tamano']}</td>
+                <td>
+                    <a href='editar.php?id={$row['id']}'>Editar</a> |
+                    <a href='eliminar.php?id={$row['id']}'>Eliminar</a>
+                </td>
+            </tr>";
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+            }
     ?>
 </table>
 
