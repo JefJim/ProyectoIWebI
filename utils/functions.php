@@ -6,6 +6,28 @@ function getConnection(): bool|mysqli
     print_r(mysqli_connect_error());
     return $connection;
 }
+function saveUser($user): bool{
+
+    $firstname = $user['firstname'];
+    $lastname = $user['lastname'];
+    $phone = $user['phone'];
+    $email = $user['email'];
+    $address = $user['address'];
+    $country = $user['country'];
+    $password = md5($user['password']);
+    $role_id = 0; 
+    $sql = "INSERT INTO usuarios (nombre, apellido, telefono, email, direccion, pais, passwd, isAdmin) VALUES('$firstname', '$lastname', '$phone', '$email', '$address', '$country', '$password', '$role_id')";
+  
+    try {
+      $conn = getConnection();
+      mysqli_query($conn, $sql);
+    } catch (Exception $e) {
+      echo $e->getMessage();
+      return false;
+    }
+    return true;
+  }
+  
 
 function authenticate($email, $passwd): bool|array|null
 {

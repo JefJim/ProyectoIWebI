@@ -10,10 +10,11 @@
 </head>
 
 <body>
+<?php require('inc/header.php')?>
     <div class="container text-center p-5" style="max-width: 60%;">
         <div class="card">
             <div class="card-body">
-                <form method="POST">
+                <form method="POST" action="actions/login.php">
                     <div class="input-group mb-3">
                         <div class="col-12">
                             <img src="https://cdn-icons-png.flaticon.com/512/2220/2220061.png" alt="Logo" width="100" height="100">
@@ -36,6 +37,7 @@
             </div>
         </div>
     </div>
+    <?php require('inc/footer.php')?>
 </body>
 
 </html>
