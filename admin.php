@@ -37,8 +37,8 @@
     <div style="text-align: center; margin-top: 20px;">
     <button onclick="window.location.href='arboles_CRUD.php'">Administrar Árboles</button>
         <button onclick="window.location.href='CRUD_especies.php'">Administrar especies</button>
-        <button onclick="window.location.href='logout.php'">Administrar Amigos</button>
-        <button onclick="window.location.href='logout.php'">Cerrar sesión</button>
+        <button onclick="window.location.href='CRUD_amigos.php'">Administrar Amigos</button>
+        <button onclick="window.location.href='actions/logout.php'">Cerrar sesión</button>
         
     </div>
 </body>

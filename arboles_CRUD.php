@@ -1,6 +1,14 @@
 <?php require ('utils/functions.php'); 
 $especies = getEspecies();
-?>
+if (isset($_GET['mensaje'])) {
+    if ($_GET['mensaje'] == 'exito') {
+        echo "<p style='color: green;'>El árbol se ha registrado correctamente.</p>";
+    } elseif ($_GET['mensaje'] == 'error') {
+        echo "<p style='color: red;'>Hubo un problema al registrar el árbol.</p>";
+    }
+}
+
+?>  
 
 <!DOCTYPE html>
 <html lang="es">
@@ -41,46 +49,63 @@ $especies = getEspecies();
     <label for="tamano">Tamaño: </label>
     <input type="text" name="tamano" required><br><br>
 
+    
+   
     <button type="submit">Guardar Árbol</button>
+    <button onclick="window.location.href='admin.php'">Atrás</button>
+    
 </form>
 
 <h2>Árboles en Venta</h2>
-<table border="1">
-    <tr>
-        <th>Especie</th>
-        <th>Ubicación</th>
-        <th>Estado</th>
-        <th>Precio</th>
-        <th>Foto</th>
-        <th>Tamaño</th>
-        <th>Acciones</th>
-    </tr>
+<form>
+    <table border="1">
+        <tr>
+            <th>Especie</th>
+            <th>Ubicación</th>
+            <th>Estado</th>
+            <th>Precio</th>
+            <th>Foto</th>
+            <th>Tamaño</th>
+            <th>Acciones</th>
+        </tr>
 
-    <?php
-     $sql = "SELECT arboles.*, especies.nombre_comercial 
-                          FROM arboles 
-                          JOIN especies ON arboles.especie = especies.id";
+        <?php
+        $sql = "SELECT arboles.*, especies.nombre_comercial 
+                FROM arboles 
+                JOIN especies ON arboles.especie = especies.id";
+
         try {
-        $conn = getConnection();
-        mysqli_query($conn, $sql);
-        echo "<tr>
-                <td>{$row['nombre_comercial']}</td>
-                <td>{$row['ubicacion']}</td>
-                <td>" . ($row['estado'] ? 'Vendido' : 'Disponible') . "</td>
-                <td>{$row['precio']}</td>
-                <td><img src='uploads/{$row['foto']}' width='100'></td>
-                <td>{$row['tamano']}</td>
-                <td>
-                    <a href='editar.php?id={$row['id']}'>Editar</a> |
-                    <a href='eliminar.php?id={$row['id']}'>Eliminar</a>
-                </td>
-            </tr>";
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            return false;
+            $conn = getConnection();
+            $result = mysqli_query($conn, $sql); // Execute query
+
+            // Check if rows exist
+            if (mysqli_num_rows($result) > 0) {
+                // Fetch each row and display it in a table
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>
+                            <td>{$row['nombre_comercial']}</td>
+                            <td>{$row['ubicacion']}</td>
+                            <td>" . ($row['estado'] ? 'Vendido' : 'Disponible') . "</td>
+                            <td>{$row['precio']}</td>
+                            <td><img src='actions/files/{$row['foto']}' width='100'></td>
+                            <td>{$row['size']}</td>
+                            <td>
+                                <a href='actions/editar_arbol.php?id={$row['id']}'>Editar</a> |
+                                <a href='actions/eliminar_arbol.php?id={$row['id']}'>Eliminar</a>
+                            </td>
+                          </tr>";
+                }
+            } else {
+                echo "<tr><td colspan='7'>No hay árboles registrados</td></tr>";
             }
-    ?>
-</table>
+
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+        ?>
+    </table>
+</form>
 
 </body>
 </html>
