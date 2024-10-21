@@ -1,6 +1,4 @@
 <?php
-
-
 function getEspecies() {
     //select * from especies
     $conn = getConnection();
@@ -8,11 +6,9 @@ function getEspecies() {
     $result = $conn->query($sql);
     return $result;
   }
-
-
 function getConnection(): bool|mysqli
 {
-    $connection = mysqli_connect('localhost', 'root', '', 'project1');
+    $connection = mysqli_connect('localhost', 'root', 'duke', 'project1');
     print_r(mysqli_connect_error());
     return $connection;
 }
