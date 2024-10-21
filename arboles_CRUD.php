@@ -1,5 +1,8 @@
 <?php require ('utils/functions.php'); 
+//$especies get an array with all species registered in the BD to select one and register a new tree
 $especies = getEspecies();
+
+//if a register happen, system print a message for the admin
 if (isset($_GET['mensaje'])) {
     if ($_GET['mensaje'] == 'exito') {
         echo "<p style='color: green;'>El árbol se ha registrado correctamente.</p>";
@@ -25,6 +28,7 @@ if (isset($_GET['mensaje'])) {
     <select name="especie" required>
         <option value="">Seleccione una especie</option>
         <?php
+        //print all species in the combobox
           foreach($especies as $id => $especie) {
             echo "<option value=\"$id\">$especie[nombre_comercial]</option>";
           }
@@ -47,10 +51,9 @@ if (isset($_GET['mensaje'])) {
     <input type="file" name="foto" accept="image/*" required><br><br>
 
     <label for="tamano">Tamaño: </label>
-    <input type="text" name="tamano" required><br><br>
+    <input type="text" name="tamano" required><br></br>
 
     
-   
     <button type="submit">Guardar Árbol</button>
     <button onclick="window.location.href='admin.php'">Atrás</button>
     
@@ -70,6 +73,7 @@ if (isset($_GET['mensaje'])) {
         </tr>
 
         <?php
+        //sql to get trees who are registered in the BD
         $sql = "SELECT arboles.*, especies.nombre_comercial 
                 FROM arboles 
                 JOIN especies ON arboles.especie = especies.id";

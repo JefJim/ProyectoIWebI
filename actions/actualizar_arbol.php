@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tamano = $_POST['tamano'];
 
     $conn = getConnection();
-
+    // SQL if image changes
     if (!empty($_FILES['foto']['name'])) {
         $foto = $_FILES['foto']['name'];
         $rutaFoto = $_SERVER['DOCUMENT_ROOT'] . "/ISW613/Proyecto1_Web1/actions/files/" . basename($_FILES['foto']['name']);
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('sdssii', $ubicacion, $estado, $precio, $foto, $tamano, $id);
     } else {
-        // Preparar la consulta sin foto
+        // SQL with not image changes
         $sql = "UPDATE arboles SET ubicacion = ?, estado = ?, precio = ?, size = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('sdsii', $ubicacion, $estado, $precio, $tamano, $id);

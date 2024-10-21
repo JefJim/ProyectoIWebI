@@ -5,10 +5,13 @@ $id = $_GET['id'] ?? null;
 if (!$id) {
     die("ID no proporcionado.");
 }
+//sql to get a tree with id
 $query = $conn->prepare("SELECT * FROM arboles WHERE id = ?");
 $query->bind_param('i', $id);
 $query->execute();
 $result = $query->get_result();
+
+//$arbol returns an array to use then
 $arbol = $result->fetch_assoc();
 
 if (!$arbol) {

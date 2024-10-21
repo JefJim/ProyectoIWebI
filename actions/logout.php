@@ -5,6 +5,6 @@
 
   header('Location: /login.php');
 
-
+?>
 
 

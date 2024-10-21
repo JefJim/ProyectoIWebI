@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    <!-- Botón de Logout -->
+    <!-- Botones de la página -->
     <div style="text-align: center; margin-top: 20px;">
     <button onclick="window.location.href='arboles_CRUD.php'">Administrar Árboles</button>
         <button onclick="window.location.href='CRUD_especies.php'">Administrar especies</button>
