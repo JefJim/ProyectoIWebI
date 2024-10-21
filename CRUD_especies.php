@@ -47,13 +47,16 @@ $especies = $conn->query("SELECT * FROM especies");
             </tr>
         </thead>
         <tbody>
-            <?php while ($row = $especies->fetch_assoc()): ?>
+            <?php 
+            //printing species in the table
+            while ($row = $especies->fetch_assoc()): ?>
             <tr>
                 <td><?php echo $row['id']; ?></td>
                 <td><?php echo $row['nombre_comercial']; ?></td>
                 <td><?php echo $row['nombre_cientifico']; ?></td>
                 <td>
-                    <a href="editar_especies.php?id=<?php echo $row['id']; ?>";>Editar</a>
+                    
+                    <a href="editar_especies.php?id=<?php echo $row['id']; ?>";>Editar</a> 
                     <a href="?delete=<?php echo $row['id']; ?>" 
                        onclick="return confirm('¿Seguro que deseas eliminar esta especie?')">Eliminar</a>
                 </td>

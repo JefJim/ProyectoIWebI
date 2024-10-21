@@ -1,6 +1,7 @@
 <?php
 require('utils/functions.php');
 $conn = getConnection();
+//get id of the species the user wants to edit
 $id = $_GET['id'];
 $result = $conn->query("SELECT * FROM especies WHERE id=$id");
 $row = $result->fetch_assoc();
@@ -8,7 +9,7 @@ $row = $result->fetch_assoc();
 if (isset($_POST['actualizar'])) {
     $nombreComercial = $_POST['nombre_comercial'];
     $nombreCientifico = $_POST['nombre_cientifico'];
-
+    //sql to update
     $conn->query("UPDATE especies 
                   SET nombre_comercial='$nombreComercial', nombre_cientifico='$nombreCientifico' 
                   WHERE id=$id");
