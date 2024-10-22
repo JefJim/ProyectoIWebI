@@ -1,59 +1,60 @@
 <?php
 require('../utils/functions.php');
+
+// Obtener las especies para el formulario
 $especies = getEspecies();
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Capturar datos del formulario
     $especie = $_POST['especie'];
     $ubicacion = $_POST['ubicacion'];
     $estado = $_POST['estado'];
     $precio = $_POST['precio'];
     $tamano = $_POST['tamano'];
-    
-    //creating image dir to use
+
+    // Crear el directorio para las imágenes si no existe
     $file = $_FILES['foto']['name'];
     $url_temp = $_FILES['foto']['tmp_name'];
     $url_insert = dirname(__FILE__) . "/files";
     $url_target = str_replace('\\', '/', $url_insert) . '/' . $file;
-    
-    //getting correct id from species to save in BD, $especie_id is the one who arrives in the SQL
+
+    // Obtener el ID correcto de la especie seleccionada
     $especie_id = 0;
-    foreach($especies as $id => $specie) {
-        if ($id == $especie){
+    foreach ($especies as $id => $specie) {
+        if ($id == $especie) {
             $especie_id = $specie['id'];
         }
     }
 
+    // Convertir el valor de estado a entero
+    $estado_final = ($estado == "0") ? 0 : 1;
 
-    //need to fix this, always insert in BD with status sold, fix this
-    $estado_final;
-    if ($estado == "0") {
-        $estado_final = 0;
-    } elseif ($estado == "1") {
-        $estado_final = 1;
-    }
-
-    //if file does´nt exists, creates a new file
+    // Crear el directorio si no existe
     if (!file_exists($url_insert)) {
         mkdir($url_insert, 0777, true);
-    };
-    //if file is in the directory, just save the new tree
-    if (move_uploaded_file($url_temp, $url_target)) {
-        $sql = "INSERT INTO arboles (especie, ubicacion, estado, precio, foto, size) 
-                VALUES ('$especie_id', '$ubicacion', '$estado_final', '$precio', '$file', '$tamano')";
-          try {
-        $conn = getConnection();
-        if (mysqli_query($conn, $sql)) {
-            //status for print a message in the page
-            header('Location: ../arboles_CRUD.php?mensaje=exito');
-        } else {
-            header('Location: ../arboles_CRUD.php?mensaje=error');
-        }
-    } catch (Exception $e) {
-        echo $e->getMessage();
-        return false;
     }
-} else {
-    echo "Error al subir la foto.";
-}
-    
+
+    // Mover la imagen a la carpeta de destino y guardar el nuevo árbol
+    if (move_uploaded_file($url_temp, $url_target)) {
+        // consulta para insertar el nuevo árbol en la base de datos
+        $sql = "INSERT INTO arboles (especie, ubicacion, estado, precio, foto, size) 
+                VALUES (?, ?, ?, ?, ?, ?)";
+        $conn = getConnection();
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('isisss', $especie_id, $ubicacion, $estado_final, $precio, $file, $tamano);
+
+        // Ejecutar la consulta de inserción
+        if ($stmt->execute()) {
+            // Redirigir con un mensaje de éxito
+            header('Location: ../arboles_CRUD.php?mensaje=exito');
+            exit();
+        } else {
+            // Redirigir con un mensaje de error
+            header('Location: ../arboles_CRUD.php?mensaje=error');
+            exit();
+        }
+    } else {
+        echo "Error al subir la foto.";
+    }
 }
 ?>

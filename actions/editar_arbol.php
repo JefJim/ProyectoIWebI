@@ -1,23 +1,69 @@
 <?php
 require('../utils/functions.php');
-$conn=getConnection();
-$id = $_GET['id'] ?? null;
+$conn = getConnection();
+
+// Obtener el ID del árbol 
+$id = $_POST['id'] ?? $_GET['id'] ?? null;
+
+// Verificar si el ID fue proporcionado
 if (!$id) {
     die("ID no proporcionado.");
 }
-//sql to get a tree with id
-$query = $conn->prepare("SELECT * FROM arboles WHERE id = ?");
-$query->bind_param('i', $id);
-$query->execute();
-$result = $query->get_result();
 
-//$arbol returns an array to use then
-$arbol = $result->fetch_assoc();
+// Obtener los datos actuales del árbol si es una solicitud GET
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    $query = $conn->prepare("SELECT * FROM arboles WHERE id = ?");
+    $query->bind_param('i', $id);
+    $query->execute();
+    $result = $query->get_result();
 
-if (!$arbol) {
-    die("Árbol no encontrado.");
+    // Verificar si el árbol existe
+    $arbol = $result->fetch_assoc();
+    if (!$arbol) {
+        die("Árbol no encontrado.");
+    }
 }
 
+// Si es una solicitud POST, realizar la actualización
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Capturar los datos del formulario
+    $ubicacion = $_POST['ubicacion'];
+    $estado = (int) $_POST['estado']; // Convertir a entero
+    $precio = $_POST['precio'];
+    $tamano = $_POST['tamano'];
+
+    // Manejar la foto: usar la foto actual si no se selecciona una nueva
+    if (!empty($_FILES['foto']['name'])) {
+        $foto = $_FILES['foto']['name'];
+        $rutaFoto = $_SERVER['DOCUMENT_ROOT'] . "/ISW613/Proyecto1_Web1/actions/files/" . basename($foto);
+
+        // Mover la foto a la carpeta correspondiente
+        move_uploaded_file($_FILES['foto']['tmp_name'], $rutaFoto);
+    } else {
+        $foto = $arbol['foto']; // Usar la foto actual
+    }
+
+    // Asegurar que la foto nunca sea nula
+    if (empty($foto)) {
+        die("Error: La foto no puede ser nula.");
+    }
+
+    // Actualizar los datos del árbol
+    $sql = "UPDATE arboles SET ubicacion = ?, estado = ?, precio = ?, foto = ?, size = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('sissii', $ubicacion, $estado, $precio, $foto, $tamano, $id);
+
+    // Verificar si la actualización fue exitosa
+    if ($stmt->execute()) {
+        // Redirigir con un mensaje de éxito
+        header('Location: ../arboles_CRUD.php?mensaje=editado');
+        exit();
+    } else {
+        echo "Error al actualizar el árbol: " . $stmt->error;
+    }
+
+    $stmt->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -30,9 +76,10 @@ if (!$arbol) {
 <body>
 
 <h2>Editar Árbol</h2>
-<form action="actualizar_arbol.php" method="POST" enctype="multipart/form-data">
+<form action="" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="id" value="<?= $arbol['id'] ?>">
 
+    <!-- Campos para editar la información del árbol -->
     <label for="ubicacion">Ubicación geográfica:</label>
     <input type="text" name="ubicacion" value="<?= $arbol['ubicacion'] ?>" required><br><br>
 
@@ -49,12 +96,11 @@ if (!$arbol) {
     <input type="file" name="foto" accept="image/*"><br><br>
 
     <label for="tamano">Tamaño: </label>
-    <input type="number" name="tamano" value="<?= $arbol ['size'] ?>" required><br><br>
+    <input type="text" name="tamano" value="<?= $arbol['size'] ?>" required><br><br>
 
     <button type="submit">Actualizar Árbol</button>
-
-    
+    <button onclick="window.location.href='../arboles_CRUD.php'">Atrás</button>
 </form>
-    <button onclick="window.location.href='/../arboles_CRUD.php'">Atrás</button>
+
 </body>
 </html>

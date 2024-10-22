@@ -1,4 +1,5 @@
-<?php require ('utils/functions.php'); 
+<?php 
+require($_SERVER['DOCUMENT_ROOT'] . '/utils/functions.php');
 //$especies get an array with all species registered in the BD to select one and register a new tree
 $especies = getEspecies();
 
@@ -94,8 +95,8 @@ if (isset($_GET['mensaje'])) {
                             <td><img src='actions/files/{$row['foto']}' width='100'></td>
                             <td>{$row['size']}</td>
                             <td>
-                                <a href='actions/editar_arbol.php?id={$row['id']}'>Editar</a> |
-                                <a href='actions/eliminar_arbol.php?id={$row['id']}'>Eliminar</a>
+                                <a href='../actions/editar_arbol.php?id={$row['id']}'>Editar</a> |
+                                <a href='../actions/eliminar_arbol.php?id={$row['id']}'>Eliminar</a>
                             </td>
                           </tr>";
                 }

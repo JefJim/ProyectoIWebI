@@ -15,29 +15,27 @@
         <div class="card">
             <div class="card-body">
                 <form method="POST" action="actions/login.php">
+                    <div class="col-12 mb-3">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2220/2220061.png" alt="Logo" width="100" height="100">
+                        <p class="h1">Welcome to MyTrees!<br />Please login to continue.</p>
+                        <br />
+                    </div>
                     <div class="input-group mb-3">
-                        <div class="col-12">
-                            <img src="https://cdn-icons-png.flaticon.com/512/2220/2220061.png" alt="Logo" width="100" height="100">
-                            <p class="h1">Welcome to MyTrees!<br />Please login to continue.</p>
-                            <br />
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Email: </span>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-text">Password: </span>
-                            <input type="password" class="form-control">
-                        </div>
+                        <span class="input-group-text">Email: </span>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Password: </span>
+                        <input type="password" class="form-control" name="password" required>
                     </div>
                     <div class="col-12">
-                        <button class="btn btn-success" type="submit">Submit form</button>
+                        <button class="btn btn-success" type="submit">Submit</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <?php require('inc/footer.php')?>
+<?php require('inc/footer.php')?>
 </body>
 
 </html>

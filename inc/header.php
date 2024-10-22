@@ -27,17 +27,17 @@ if ($user == null) {
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" id="navId">
     <li class="nav-item">
-      <a href="/signup.php" class="nav-link active">Signup</a>
+      <a href="../signup.php" class="nav-link active">Signup</a>
     </li>
     <li class="nav-item">
-      <a href="/login.php" class="nav-link active">Login</a>
+      <a href="../login.php" class="nav-link active">Login</a>
     </li>
     <li class="nav-item">
-      <a href="/actions/logout.php" class="nav-link active">Logout</a>
+      <a href="../actions/logout.php" class="nav-link active">Logout</a>
     </li>
 
     <li class="nav-item">
-      <a href="/users.php" class="nav-link">Users</a>
+      <a href="../users.php" class="nav-link">Users</a>
     </li>
     <li>
       Hola <?php echo $name;
