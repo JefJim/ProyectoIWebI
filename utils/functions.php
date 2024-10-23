@@ -8,7 +8,7 @@ function getEspecies() {
   }
 function getConnection(): bool|mysqli
 {
-    $connection = mysqli_connect('localhost', 'root', 'duke', 'project1');
+    $connection = mysqli_connect('localhost', 'root', '', 'project1');
     print_r(mysqli_connect_error());
     return $connection;
 }

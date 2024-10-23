@@ -65,5 +65,6 @@ $especies = $conn->query("SELECT * FROM especies");
         </tbody>
     </table>
     <button onclick="window.location.href='admin.php'">Atrás</button>
+    <?php require('inc/footer.php')?>
 </body>
 </html>

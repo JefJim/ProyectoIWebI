@@ -39,5 +39,6 @@
         <p>El usuario o la contraseña son incorrectos. Por favor, inténtelo de nuevo.</p>
         <button class="btn" onclick="window.location.href='/login.php';">Volver a Iniciar Sesión</button>
     </div>
+    <?php require('inc/footer.php')?>
 </body>
 </html>

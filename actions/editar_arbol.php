@@ -4,7 +4,7 @@ $conn = getConnection();
 
 // Obtener el ID del árbol 
 $id = $_POST['id'] ?? $_GET['id'] ?? null;
-
+$arbol;
 // Verificar si el ID fue proporcionado
 if (!$id) {
     die("ID no proporcionado.");
@@ -26,6 +26,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 // Si es una solicitud POST, realizar la actualización
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $query = $conn->prepare("SELECT * FROM arboles WHERE id = ?");
+    $query->bind_param('i', $id);
+    $query->execute();
+    $result = $query->get_result();
+
+    // Verificar si el árbol existe
+    $arbol = $result->fetch_assoc();
+    if (!$arbol) {
+        die("Árbol no encontrado.");
+    }
     // Capturar los datos del formulario
     $ubicacion = $_POST['ubicacion'];
     $estado = (int) $_POST['estado']; // Convertir a entero
@@ -47,11 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($foto)) {
         die("Error: La foto no puede ser nula.");
     }
-
+    $currentTimestamp = date('Y-m-d H:i:s');
     // Actualizar los datos del árbol
-    $sql = "UPDATE arboles SET ubicacion = ?, estado = ?, precio = ?, foto = ?, size = ? WHERE id = ?";
+    $sql = "UPDATE arboles SET ubicacion = ?, estado = ?, precio = ?, foto = ?, size = ?, last_update = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('sissii', $ubicacion, $estado, $precio, $foto, $tamano, $id);
+    $stmt->bind_param('sissisi', $ubicacion, $estado, $precio, $foto, $tamano, $currentTimestamp, $id);
 
     // Verificar si la actualización fue exitosa
     if ($stmt->execute()) {

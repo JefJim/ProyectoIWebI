@@ -75,7 +75,8 @@ $result = mysqli_query($conn, $sql);
     }
     ?>
   </table>
-
+  <button onclick="window.location.href='actions/logout.php'">Cerrar Sesión</button>
+  <?php require('inc/footer.php')?>
 </body>
 
 </html>

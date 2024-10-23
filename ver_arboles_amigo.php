@@ -71,7 +71,7 @@ $result = $stmt->get_result();
   </table>
 
   <button onclick="window.location.href='CRUD_amigos.php'">Volver a la Lista de Amigos</button>
-
+  <?php require('inc/footer.php')?>
 </body>
 
 </html>

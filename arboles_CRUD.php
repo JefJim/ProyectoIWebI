@@ -110,7 +110,8 @@ if (isset($_GET['mensaje'])) {
         }
         ?>
     </table>
+    
 </form>
-
+<?php require('inc/footer.php')?>
 </body>
 </html>

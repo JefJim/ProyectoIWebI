@@ -61,6 +61,6 @@ $arbolesVendidos = isset($resultVendidos['arboles_vendidos']) ? $resultVendidos[
     <button onclick="window.location.href='CRUD_amigos.php'">Administrar Amigos</button>
     <button onclick="window.location.href='actions/logout.php'">Cerrar Sesión</button>
 </div>
-
+<?php require('inc/footer.php')?>
 </body>
 </html>

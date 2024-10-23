@@ -31,5 +31,6 @@ if (isset($_POST['actualizar'])) {
         <input type="text" name="nombre_cientifico" value="<?php echo $row['nombre_cientifico']; ?>" required>
         <button type="submit" name="actualizar">Actualizar</button>
     </form>
+    <?php require('inc/footer.php')?>
 </body>
 </html>

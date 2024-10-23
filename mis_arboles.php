@@ -65,9 +65,11 @@ $result = $stmt->get_result();
             echo "<tr><td colspan='5'>No has comprado ningún árbol.</td></tr>";
         }
         ?>
+        
 
     </table>
-
+    <button onclick="window.location.href='users.php'">Atrás</button>
+    <?php require('inc/footer.php')?>
 </body>
 
 </html>

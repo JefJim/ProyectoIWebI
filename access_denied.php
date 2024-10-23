@@ -9,5 +9,6 @@
     <h1>Acceso Denegado</h1>
     <p>No tienes permiso para acceder a esta página.</p>
     <a href="/login.php">Volver al inicio de sesión</a>
+    <?php require('inc/footer.php')?>
 </body>
 </html>

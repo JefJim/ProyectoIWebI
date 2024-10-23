@@ -53,7 +53,7 @@ $result = mysqli_query($conn, $sql);
   </table>
 
   <button onclick="window.location.href='admin.php'">Volver al Dashboard</button>
-
+  <?php require('inc/footer.php')?>
 </body>
 
 </html>

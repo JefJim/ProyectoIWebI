@@ -37,11 +37,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Mover la imagen a la carpeta de destino y guardar el nuevo árbol
     if (move_uploaded_file($url_temp, $url_target)) {
         // consulta para insertar el nuevo árbol en la base de datos
-        $sql = "INSERT INTO arboles (especie, ubicacion, estado, precio, foto, size) 
-                VALUES (?, ?, ?, ?, ?, ?)";
+
+        //get date and hour current in the server
+        $currentTimestamp = date('Y-m-d H:i:s');
+        $sql = "INSERT INTO arboles (especie, ubicacion, estado, precio, foto, size, last_update) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
         $conn = getConnection();
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('isisss', $especie_id, $ubicacion, $estado_final, $precio, $file, $tamano);
+        $stmt->bind_param('isissss', $especie_id, $ubicacion, $estado_final, $precio, $file, $tamano, $currentTimestamp);
 
         // Ejecutar la consulta de inserción
         if ($stmt->execute()) {
