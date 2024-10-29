@@ -1,46 +1,46 @@
 <?php
 session_start();
 $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
-$name = "";
+$name = $user ? $user['firstname'] : "";
+?>
 
-// "if" for delete a warning on header, then just call $name
-if ($user == null) {
-  $name = "" ;
-  } 
-  else {
-    $name = $user['firstname'];
-  }
-
-  ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full bg-green-100">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Sign Up</title>
 </head>
-<body>
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" id="navId">
-    <li class="nav-item">
-      <a href="../signup.php" class="nav-link active">Signup</a>
-    </li>
-    <li class="nav-item">
-      <a href="../login.php" class="nav-link active">Login</a>
-    </li>
-    <li class="nav-item">
-      <a href="../actions/logout.php" class="nav-link active">Logout</a>
-    </li>
 
-    <li class="nav-item">
-      <a href="../users.php" class="nav-link">Users</a>
-    </li>
-    <li>
-      Hola <?php echo $name;
-         ?>
-    </li>
-  </ul>
+<body class="h-full">
+    <!-- Navbar -->
+    <nav class="bg-green-800 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Left links -->
+            <ul class="flex space-x-4">
+                <li>
+                    <a href="../signup.php" class="text-white text-sm font-medium hover:text-green-200">Signup</a>
+                </li>
+                <li>
+                    <a href="../login.php" class="text-white text-sm font-medium hover:text-green-200">Login</a>
+                </li>
+                <li>
+                    <a href="../actions/logout.php" class="text-white text-sm font-medium hover:text-green-200">Logout</a>
+                </li>
+                <li>
+                    <a href="../users.php" class="text-white text-sm font-medium hover:text-green-200">Users</a>
+                </li>
+            </ul>
+
+            <!-- Right greeting -->
+            <div class="text-sm text-white">
+                <?php if ($name): ?>
+                    <span>Hola, <?php echo $name; ?></span>
+                <?php endif; ?>
+            </div>
+        </div>
+    </nav>
+</body>
+</html>

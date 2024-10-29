@@ -77,40 +77,65 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="h-full bg-green-100">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Editar Árbol</title>
 </head>
-<body>
+<body class="h-full">
+    <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+            <h2 class="mt-6 text-center text-3xl font-extrabold text-green-900">Editar Árbol</h2>
+            <form action="" method="POST" enctype="multipart/form-data" class="mt-8 space-y-6">
+                <input type="hidden" name="id" value="<?= $arbol['id'] ?>">
 
-<h2>Editar Árbol</h2>
-<form action="" method="POST" enctype="multipart/form-data">
-    <input type="hidden" name="id" value="<?= $arbol['id'] ?>">
+                <div>
+                    <label for="ubicacion" class="block text-sm font-medium text-green-900">Ubicación geográfica</label>
+                    <input type="text" name="ubicacion" value="<?= $arbol['ubicacion'] ?>" required 
+                        class="mt-2 block w-full rounded-md border-0 py-1.5 text-green-900 shadow-sm ring-1 ring-inset ring-green-300 focus:ring-2 focus:ring-green-600 sm:text-sm">
+                </div>
 
-    <!-- Campos para editar la información del árbol -->
-    <label for="ubicacion">Ubicación geográfica:</label>
-    <input type="text" name="ubicacion" value="<?= $arbol['ubicacion'] ?>" required><br><br>
+                <div>
+                    <label for="estado" class="block text-sm font-medium text-green-900">Estado</label>
+                    <select name="estado" required 
+                        class="mt-2 block w-full rounded-md border-0 py-1.5 text-green-900 shadow-sm ring-1 ring-inset ring-green-300 focus:ring-2 focus:ring-green-600 sm:text-sm">
+                        <option value="0" <?= $arbol['estado'] == 0 ? 'selected' : '' ?>>Disponible</option>
+                        <option value="1" <?= $arbol['estado'] == 1 ? 'selected' : '' ?>>Vendido</option>
+                    </select>
+                </div>
 
-    <label for="estado">Estado:</label>
-    <select name="estado" required>
-        <option value="0" <?= $arbol['estado'] == 0 ? 'selected' : '' ?>>Disponible</option>
-        <option value="1" <?= $arbol['estado'] == 1 ? 'selected' : '' ?>>Vendido</option>
-    </select><br><br>
+                <div>
+                    <label for="precio" class="block text-sm font-medium text-green-900">Precio</label>
+                    <input type="number" name="precio" step="0.01" value="<?= $arbol['precio'] ?>" required 
+                        class="mt-2 block w-full rounded-md border-0 py-1.5 text-green-900 shadow-sm ring-1 ring-inset ring-green-300 focus:ring-2 focus:ring-green-600 sm:text-sm">
+                </div>
 
-    <label for="precio">Precio:</label>
-    <input type="number" name="precio" step="0.01" value="<?= $arbol['precio'] ?>" required><br><br>
+                <div>
+                    <label for="foto" class="block text-sm font-medium text-green-900">Foto del árbol (opcional)</label>
+                    <input type="file" name="foto" accept="image/*" 
+                        class="mt-2 block w-full rounded-md border-0 py-1.5 text-green-900 shadow-sm ring-1 ring-inset ring-green-300 focus:ring-2 focus:ring-green-600 sm:text-sm">
+                </div>
 
-    <label for="foto">Foto del árbol (opcional):</label>
-    <input type="file" name="foto" accept="image/*"><br><br>
+                <div>
+                    <label for="tamano" class="block text-sm font-medium text-green-900">Tamaño</label>
+                    <input type="text" name="tamano" value="<?= $arbol['size'] ?>" required 
+                        class="mt-2 block w-full rounded-md border-0 py-1.5 text-green-900 shadow-sm ring-1 ring-inset ring-green-300 focus:ring-2 focus:ring-green-600 sm:text-sm">
+                </div>
 
-    <label for="tamano">Tamaño: </label>
-    <input type="text" name="tamano" value="<?= $arbol['size'] ?>" required><br><br>
-
-    <button type="submit">Actualizar Árbol</button>
-    <button onclick="window.location.href='../arboles_CRUD.php'">Atrás</button>
-</form>
-
+                <div class="flex justify-end gap-4">
+                    <button type="submit" 
+                        class="inline-flex justify-center rounded-md border border-transparent bg-green-600 py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        Actualizar Árbol
+                    </button>
+                    <button type="button" onclick="window.location.href='../arboles_CRUD.php'" 
+                        class="inline-flex justify-center rounded-md border border-transparent bg-gray-300 py-2 px-4 text-sm font-medium text-gray-700 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        Atrás
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

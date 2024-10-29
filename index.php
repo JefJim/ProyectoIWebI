@@ -1,18 +1,36 @@
-<?php
-?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full bg-green-100">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Bienvenido</title>
 </head>
 
-<body>
-
+<body class="h-full flex items-center justify-center">
+    <div class="max-w-lg w-full bg-white p-8 rounded-lg shadow-lg text-center">
+        <!-- Imagen de la empresa -->
+        <img src="https://cdn-icons-png.flaticon.com/512/2220/2220061.png" alt="Logo de Green Life Inc" class="w-24 h-24 mx-auto mb-4">
+        
+        <!-- Título de bienvenida -->
+        <h1 class="text-4xl font-bold text-green-900 mb-4">Welcome to Green Life Inc</h1>
+        
+        <!-- Descripción -->
+        <p class="text-gray-700 mb-6">Tree management and purchasing for everyone</p>
+        
+        <!-- Botones de acción -->
+        <div class="flex justify-center gap-4">
+            <a href="/login.php" 
+               class="px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                Login
+            </a>
+            <a href="/signup.php" 
+               class="px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                Sign Up
+            </a>
+        </div>
+    </div>
 </body>
 
 </html>

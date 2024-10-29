@@ -23,44 +23,44 @@ $arbolesDisponibles = isset($resultDisponibles['arboles_disponibles']) ? $result
 $arbolesVendidos = isset($resultVendidos['arboles_vendidos']) ? $resultVendidos['arboles_vendidos'] : 0;
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
+<!doctype html>
+<html class="h-full bg-green-100">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-<h1>Panel de Dashboard</h1>
 
-<div class="container">
-    <!-- Tarjeta de Amigos Registrados -->
-    <div class="card">
-        <h2>Amigos Registrados</h2>
-        <p><?php echo $totalAmigos; ?></p>
+<body class="h-full">
+    <div class="min-h-full">
+        <?php define("_title_", "Dashboard");
+    require("./inc/adminNave.php"); ?>
+        <main>
+            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                <div>
+                    <div class="mt-6 border-t border-green-100">
+                        <dl class="divide-y divide-green-100">
+                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm font-medium leading-6 text-green-900">Amigos Registrados</dt>
+                                <dd class="mt-1 text-sm leading-6 text-green-700 sm:col-span-2 sm:mt-0"><?php echo $totalAmigos; ?></dd>
+                            </div>
+                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm font-medium leading-6 text-green-900">Árboles Disponibles</dt>
+                                <dd class="mt-1 text-sm leading-6 text-green-700 sm:col-span-2 sm:mt-0"><?php echo $arbolesDisponibles; ?></dd>
+                            </div>
+                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <dt class="text-sm font-medium leading-6 text-green-900">Árboles Vendidos</dt>
+                                <dd class="mt-1 text-sm leading-6 text-green-700 sm:col-span-2 sm:mt-0"><?php echo $arbolesVendidos; ?></dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
-
-    <!-- Tarjeta de Árboles Disponibles -->
-    <div class="card">
-        <h2>Árboles Disponibles</h2>
-        <p><?php echo $arbolesDisponibles; ?></p>
-    </div>
-
-    <!-- Tarjeta de Árboles Vendidos -->
-    <div class="card">
-        <h2>Árboles Vendidos</h2>
-        <p><?php echo $arbolesVendidos; ?></p>
-    </div>
-</div>
-
-<!-- Botones de navegación para CRUD -->
-<div style="text-align: center; margin-top: 20px;">
-    <button onclick="window.location.href='arboles_CRUD.php'">Administrar Árboles</button>
-    <button onclick="window.location.href='CRUD_especies.php'">Administrar Especies</button>
-    <button onclick="window.location.href='CRUD_amigos.php'">Administrar Amigos</button>
-    <button onclick="window.location.href='actions/logout.php'">Cerrar Sesión</button>
-</div>
-<?php require('inc/footer.php')?>
+    <?php require('inc/footer.php') ?>
 </body>
+
 </html>
