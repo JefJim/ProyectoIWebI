@@ -1,8 +1,10 @@
+
 <?php
 session_start();
 $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
-$name = $user ? $user['firstname'] : "";
+$name = ($user && isset($user['firstname'])) ? $user['firstname'] : "";
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en" class="h-full bg-green-100">

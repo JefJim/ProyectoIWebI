@@ -10,7 +10,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['isAdmin'] == 1) {
 
 $conn = getConnection();
 
-$mensaje = $_GET['mensaje'] ?? ''; 
+$mensaje = $_GET['mensaje'] ?? '';
 
 // Get the list of available trees
 $sql = "SELECT trees.*, species.name_trade 
@@ -43,8 +43,8 @@ $result = mysqli_query($conn, $sql);
 
     <!-- Button to view purchased trees -->
     <div class="mb-6">
-      <button onclick="window.location.href='my_trees.php'" 
-              class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+      <button onclick="window.location.href='my_trees.php'"
+        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
         My Trees
       </button>
     </div>
@@ -73,7 +73,7 @@ $result = mysqli_query($conn, $sql);
                       <td class='px-6 py-4 text-sm text-green-900'>{$tree['size']}</td>
                       <td class='px-6 py-4 text-sm text-green-900'>{$tree['price']}</td>
                       <td class='px-6 py-4'>
-                        <img src='actions/files/{$tree['photo']}' alt='photo of the tree' class='w-24 h-24 object-cover rounded-md'>
+                       <img src='actions/files/{$tree['photo']}' alt='photo of the tree' class='w-24 h-24 object-contain rounded-md'>
                       </td>
                       <td class='px-6 py-4'>
                         <a href='/actions/buy_tree.php?id={$tree['id']}' 
@@ -83,7 +83,7 @@ $result = mysqli_query($conn, $sql);
                       </td>
                     </tr>";
             }
-          } 
+          }
           // if there are no available trees, show a message
           else {
             echo "<tr><td colspan='6' class='px-6 py-4 text-center text-sm text-gray-500'>There are no trees available.</td></tr>";
@@ -95,13 +95,17 @@ $result = mysqli_query($conn, $sql);
 
     <!-- button for log out -->
     <div class="mt-6">
-      <button onclick="window.location.href='actions/logout.php'" 
-              class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">
+      <button onclick="window.location.href='actions/logout.php'"
+        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
         Log out
+      </button>
+      <button onclick="window.location.href='/login.php';"
+        class="px-4 py-2 bg-green-800 text-white rounded-md hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-500">
+        Back to login
       </button>
     </div>
   </div>
-  <?php require('inc/footer.php')?>
+  <?php require('inc/footer.php') ?>
 </body>
 
 </html>
