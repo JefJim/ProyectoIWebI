@@ -1,30 +1,30 @@
 <?php
 require('../utils/functions.php'); 
 
-// Verifica intento de inicio de sesión
+// Verify login
 if ($_POST) {
     $email = $_POST['email']; // Captura 
     $password = $_POST['password']; // Captura 
 
-    // Llama a la función de autenticación para validar las credenciales 
+    // Call the authentication function to validate credentials
     $user = authenticate($email, $password);
 
-    // Si la autenticación es exitosa
+    // If authentication is successful
     if ($user) {
-        session_start(); // Inicia una nueva sesión
+        session_start(); // start a new session
 
-        $_SESSION['user'] = $user; // Almacena los datos del usuario en la sesión
+        $_SESSION['user'] = $user; // Stores user data in the session
 
-        // Verifica si el usuario es un administrador
+        // Check if the user is an administrator
         if ($user['isAdmin'] == 1) {
-            header('Location: /admin.php'); // Redirige a la página de administrador
+            header('Location: /admin.php'); // Redirects to the admin page
             exit(); 
         } else {
-            header('Location: /users.php'); // Redirige a la página de usuario estándar
+            header('Location: /users.php'); // Redirects to the friends page
             exit(); 
         }
     } else {
-        // Redirige a la página de error si la autenticación falla
+        // Redirect to error page if authentication fails
         header('Location: /login_error.php');
         exit(); 
     }

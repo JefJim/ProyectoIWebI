@@ -1,48 +1,48 @@
 <?php
 require($_SERVER['DOCUMENT_ROOT'] . '/utils/functions.php');
 
-// la conexión 
+// get the connection
 $conexion = getConnection();
 
-// Verificar conexión
+// check the connection
 if (!$conexion) {
     die("Error de conexión: " . mysqli_connect_error());
 }
 
-// Consultas SQL para contar amigos, árboles disponibles y árboles vendidos
-$sqlAmigos = "SELECT COUNT(*) AS total_amigos FROM usuarios WHERE isAdmin = 0"; // Contar solo amigos
-$sqlDisponibles = "SELECT COUNT(*) AS arboles_disponibles FROM arboles WHERE estado = 0"; // Contar árboles disponibles
-$sqlVendidos = "SELECT COUNT(*) AS arboles_vendidos FROM arboles WHERE estado = 1"; // Contar árboles vendidos
+// SQL queries to count friends, available trees and sold trees
+$sqlfriends = "SELECT COUNT(*) AS total_friends FROM users WHERE isAdmin = 0"; // Count only friends
+$sqlDisponibles = "SELECT COUNT(*) AS trees_disponibles FROM trees WHERE status = 0"; // count available trees
+$sqlVendidos = "SELECT COUNT(*) AS trees_vendidos FROM trees WHERE status = 1"; // count sold trees
 
-// Ejecutar la consulta para contar amigos
-$resultAmigos = $conexion->query($sqlAmigos);
-if ($resultAmigos) {
-    $resultAmigos = $resultAmigos->fetch_assoc(); // Obtener resultado como array asociativo
+// Execute the query to count friends
+$resultfriends = $conexion->query($sqlfriends);
+if ($resultfriends) {
+    $resultfriends = $resultfriends->fetch_assoc(); // Get result as associative array
  
 
 } else {
-    // Error al contar amigos
-    error_log("Error en consulta de amigos: " . $conexion->error);
+    // Error counting friends
+    error_log("Error in friends query: " . $conexion->error);
 }
 
-// Ejecutar la consulta para contar árboles disponibles
+// Execute the query to count available trees
 $resultDisponibles = $conexion->query($sqlDisponibles);
 if ($resultDisponibles) {
     $resultDisponibles = $resultDisponibles->fetch_assoc();
 } else {
-    // Error al contar árboles disponibles
-    error_log("Error en consulta de árboles disponibles: " . $conexion->error);
+    // Error counting available trees
+    error_log("Error querying available trees: " . $conexion->error);
 }
 
-// Ejecutar la consulta para contar árboles vendidos
+// Execute the query to count sold trees
 $resultVendidos = $conexion->query($sqlVendidos);
 if ($resultVendidos) {
     $resultVendidos = $resultVendidos->fetch_assoc();
 } else {
-    // Error al contar árboles vendidos
-    error_log("Error en consulta de árboles vendidos: " . $conexion->error);
+    // Error counting sold trees
+    error_log("Error in query of trees sold: " . $conexion->error);
 }
 
-// Cerrar la conexión a la base de datos
+// Close the connection
 $conexion->close();
 ?>

@@ -1,48 +1,48 @@
 <?php
-// Configuración de la conexión a la base de datos
+// connect to the database
 $host = 'localhost';
 $dbname = 'project1';
 $username = 'root';
 $password = '';
 
-// Crear la conexión con MySQLi
+// create the connection with MYSQL
 $conn = new mysqli($host, $username, $password, $dbname);
 
-// Verificar si la conexión tuvo éxito
+// check the connection was successful
 if ($conn->connect_error) {
-    die("Error en la conexión: " . $conn->connect_error);
+    die("Connection error: " . $conn->connect_error);
 }
 $sql = "
-SELECT arboles.id AS arbol_id, arboles.last_update, usuarios.nombre AS usuario_nombre
-    FROM arboles
-    INNER JOIN usuarios ON arboles.userId = usuarios.id
-    WHERE arboles.last_update < DATE_SUB(NOW(), INTERVAL 1 MONTH)";
+SELECT trees.id AS tree_id, trees.last_update, users.name AS usuario_name
+    FROM trees
+    INNER JOIN users ON trees.userId = users.id
+    WHERE trees.last_update < DATE_SUB(NOW(), INTERVAL 1 MONTH)";
 
 $result = $conn->query($sql);
 $mensaje;
-// Verificar si hay resultados
+// check if there are trees that have not been updated in the last month
 if ($result->num_rows > 0) {
-    // Construir el mensaje del correo
-    $mensaje = "Los siguientes árboles no han sido actualizados desde hace 1 mes:\n\n";
-    while ($arbol = $result->fetch_assoc()) {
-        $mensaje .= "-ID " . $arbol['arbol_id'] . " (Última actualización: " . $arbol['last_update'] . ")\n";
-        // Configuración del correo
-    $para = "jefryjimenez2011@gmail.com";  // Correo del administrador
-    $asunto = "Árboles desactualizados";
+    // Create the message
+    $mensaje = "The following trees have not been updated for 1 month:\n\n";
+    while ($tree = $result->fetch_assoc()) {
+        $mensaje .= "-ID " . $tree['tree_id'] . " (Last update: " . $tree['last_update'] . ")\n";
+        // configuration of the email
+    $para = "jefryjimenez2011@gmail.com";  // email address to send the notification
+    $asunto = "Outdated trees";
     $headers = "From: notificaciones@gmail.com\r\n";
     $headers .= "Content-Type: text/plain; charset=UTF-8";
-        // Enviar el correo
+        // send the email
         if (mail($para, $asunto, $mensaje, $headers)) {
-            echo "Correo enviado correctamente.";
+            echo "Email sent successfully.";
         } else {
-            echo "Error al enviar el correo.";
+            echo "Error sending email.";
         }
     }
 } else {
-    echo "No hay árboles desactualizados.";
+    echo "There are no outdated trees.";
 }
 
-// Cerrar la conexión
+// Close the connection
 $conn->close();
 ?>
     

@@ -1,30 +1,30 @@
 <?php
-require '../utils/functions.php'; // Importa las funciones necesarias
+require '../utils/functions.php'; // Import the necessary functions
 
 if ($_POST && isset($_POST['firstname'])) {
-    // Captura los campos del formulario de registro
+    // Capture the data from the form
     $user['firstname'] = $_POST['firstname'];
     $user['lastname'] = $_POST['lastname'];
     $user['phone'] = $_POST['phone'];
     $user['email'] = $_POST['email'];
     $user['address'] = $_POST['address'];
     $user['country'] = $_POST['country'];
-    $user['password'] = $_POST['password']; // se encripta en saveUser, si se encripta acá también hace una doble encript. y falla
-    $user['isAdmin'] = 0; // Amigo
+    $user['password'] = $_POST['password']; // It is encrypted in saveUser, if it is encrypted here too, it does a double encryption and fails
+    $user['isAdmin'] = 0; // friend
 
-    // Llama a la función para verificar si el correo ya existe
+    // Calls the function to check if the mail already exists
     if (emailExists($user['email'])) {
-        // Si el correo ya existe, redirige a la página de error de registro
+        // If the email already exists, redirect to the registration error page
         header("Location: /signup_error.php");
         exit();
     }
 
-    // Si el correo es único, guardar el usuario
+    // if the email does not exist, save the user
     if (saveUser($user)) {
-        header("Location: /login.php"); // Redirige al login después del registro
+        header("Location: /login.php"); // Redirect to the login page late registration
         exit();
     } else {
-        header("Location: /signup.php?error=Invalid user data"); // Redirige si hay un error en el registro
+        header("Location: /signup.php?error=Invalid user data"); // Redirect if there is an error in the registry
         exit();
     }
 }

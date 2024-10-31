@@ -2,28 +2,28 @@
 session_start();
 require('utils/functions.php');
 
-// Verifica si el usuario ha iniciado sesión y si es administrador
+// check if the user is authenticated and is an administrator
 if (!isset($_SESSION['user']) || $_SESSION['user']['isAdmin'] != 1) {
-  // Redirige a la página de acceso denegado si no es administrador
+  // Redirect to the access denied page
   header('Location: /access_denied.php');
   exit();
 }
-// Obtener el ID del amigo
-$amigo_id = $_GET['amigo_id'] ?? null;
-// Verificar si se proporcionó el ID del amigo
-if (!$amigo_id) {
-  die("ID del amigo no proporcionado.");
+// Get the friend ID 
+$friend_id = $_GET['friend_id'] ?? null;
+// Check if the friend ID was provided
+if (!$friend_id) {
+  die("ID del friend no proporcionado.");
 }
 
 $conn = getConnection();
 
-// Obtener la lista de árboles comprados por el amigo
-$sql = "SELECT arboles.*, especies.nombre_comercial 
-        FROM arboles 
-        JOIN especies ON arboles.especie = especies.id 
-        WHERE arboles.userId = ?";
+// Get the friend's trees list
+$sql = "SELECT trees.*, species.name_trade 
+        FROM trees 
+        JOIN species ON trees.species = species.id 
+        WHERE trees.userId = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param('i', $amigo_id);
+$stmt->bind_param('i', $friend_id);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
@@ -35,12 +35,12 @@ $result = $stmt->get_result();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
-  <title>Árboles de Amigo</title>
+  <title>Friend trees</title>
 </head>
 
 <body class="h-full">
   <div class="min-h-full">
-    <?php define("_title_", "Árboles de Amigo");
+    <?php define("_title_", "Friend trees");
     require("./inc/adminNave.php"); ?>
 
     <div class="relative overflow-x-auto">
@@ -48,19 +48,19 @@ $result = $stmt->get_result();
         <thead class="text-xs text-green-700 uppercase bg-green-50 dark:bg-green-700 dark:text-green-400">
           <tr>
             <th scope="col" class="px-6 py-3 font-medium">
-              Especie
+              Species
             </th>
             <th scope="col" class="px-6 py-3 font-medium">
-              Ubicación
+              Ubication
             </th>
             <th scope="col" class="px-6 py-3 font-medium">
-              Tamaño
+              Size
             </th>
             <th scope="col" class="px-6 py-3 font-medium">
-              Estado
+              Status
             </th>
             <th scope="col" class="px-6 py-3 font-medium">
-              Acciones
+              Actions
             </th>
           </tr>
         </thead>
@@ -75,32 +75,32 @@ $result = $stmt->get_result();
 
           // Check if there are any results
           if (mysqli_num_rows($result) == 0) {
-            echo "No hay árboles registrados para este amigo.";
+            echo "There are no trees registered for this friend.";
             exit; // Stop the script if no results are found
           }
           // printing species in the table
-          while ($arbol = mysqli_fetch_assoc($result)):
-            $estado = $arbol['estado'] == 1 ? 'Vendido' : 'Disponible';
+          while ($tree = mysqli_fetch_assoc($result)):
+            $status = $tree['status'] == 1 ? 'Sold' : 'Available';
 
-            if ($arbol):
+            if ($tree):
           ?>
               <tr class="bg-white border-b dark:bg-green-800 dark:border-green-700">
                 <th scope="row" class="px-6 py-8 font-medium text-green-900 whitespace-nowrap dark:text-white">
-                  <?php echo $arbol['nombre_comercial']; ?>
+                  <?php echo $tree['name_trade']; ?>
                 </th>
                 <th scope="row" class="px-6 py-8 font-medium text-green-900 whitespace-nowrap dark:text-white">
-                  <?php echo $arbol['ubicacion']; ?>
+                  <?php echo $tree['ubication']; ?>
                 </th>
                 <th scope="row" class="px-6 py-8 font-medium text-green-900 whitespace-nowrap dark:text-white">
-                  <?php echo $arbol['size']; ?>
+                  <?php echo $tree['size']; ?>
                 </th>
                 <th scope="row" class="px-6 py-8 font-medium text-green-900 whitespace-nowrap dark:text-white">
-                  <?php echo $estado; ?>
+                  <?php echo $status; ?>
                 </th>
                 <td class="px-6 py-4">
-                  <a href="../actions/editar_arbol.php?id=<?php echo $arbol['id']; ?>" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-green-700 hover:text-white" aria-current="page">Editar</a>
+                  <a href="../actions/edit_tree.php?id=<?php echo $tree['id']; ?>" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-green-700 hover:text-white" aria-current="page">Edit</a>
                   |
-                  <a href="../actions/eliminar_arbol.php?id=<?php echo $arbol['id']; ?>" onclick="return confirm('¿Seguro que deseas eliminar esta especie?')" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-green-700 hover:text-white" aria-current="page">Eliminar</a>
+                  <a href="../actions/delete_tree.php?id=<?php echo $tree['id']; ?>" onclick="return confirm('Are you sure you want to delete this tree?')" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-green-700 hover:text-white" aria-current="page">Delete</a>
                 </td>
               </tr>
             <?php
@@ -108,7 +108,7 @@ $result = $stmt->get_result();
             ?>
               <tr>
                 <td colspan="5" class="px-6 py-4">
-                  No hay árboles registrados para este amigo.
+                There are no trees registered for this friend
                 </td>
               </tr>
           <?php

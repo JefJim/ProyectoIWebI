@@ -37,7 +37,7 @@ $name = $user ? $user['firstname'] : "";
             <!-- Right greeting -->
             <div class="text-sm text-white">
                 <?php if ($name): ?>
-                    <span>Hola, <?php echo $name; ?></span>
+                    <span>Hello, <?php echo $name; ?></span>
                 <?php endif; ?>
             </div>
         </div>
