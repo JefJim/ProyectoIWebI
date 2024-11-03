@@ -20,18 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Get the correct ID of the selected species
     $species_id = 0;
-    if (is_array($species)) {
-        foreach ($species as $specie) {
-            if ($specie['id'] == $species_selected) {
-                $species_id = $specie['id'];
-                break;
-            }
+    foreach ($species as $id => $specie) {
+        if ($id == $specie) {
+            $species_id = $specie['id'];
+            echo ($species_id);
+            break;
         }
-    }
-
-    // Verify that the species ID is valid
-    if ($species_id === 0) {
-        die("Error: The selected species ID is invalid.");
     }
 
     // Convert state value to integer
@@ -49,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 VALUES (?, ?, ?, ?, ?, ?, ?)";
         $conn = getConnection();
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('isissss', $species_id, $ubication, $status_final, $price, $file, $size, $currentTimestamp);
+        $stmt->bind_param('isissss', $species_selected, $ubication, $status_final, $price, $file, $size, $currentTimestamp);
 
         if ($stmt->execute()) {
             header('Location: ../trees_CRUD.php?mensaje=exito');

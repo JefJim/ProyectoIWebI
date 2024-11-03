@@ -38,7 +38,6 @@ $result = $stmt->get_result();
 <body class="h-full">
     <div class="min-h-full flex flex-col items-center py-8">
         <h1 class="text-3xl font-bold text-green-900 mb-6">My purchased trees</h1>
-
         <div class="overflow-x-auto w-full max-w-4xl">
             <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
                 <thead class="bg-green-800 text-white">
@@ -53,6 +52,7 @@ $result = $stmt->get_result();
                 <tbody class="bg-white">
                     <?php
                     // Show the list of trees purchased by the user
+                    echo ($user_id);
                     if ($result->num_rows > 0) {
                         while ($tree = $result->fetch_assoc()) {
                             echo "<tr class='border-b'>
