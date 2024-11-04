@@ -3,7 +3,11 @@ require '../utils/functions.php'; // Import the necessary functions
 
 if ($_POST && isset($_POST['firstname'])) {
     // Capture the data from the form
-    $user['firstname'] = $_POST['firstname'];
+    $password = $_POST["password"];
+    if (strlen($password) < 8) {
+        echo "<p style='color: red;'>La contraseña debe tener más de 8 caracteres.</p>";
+    } else {
+        $user['firstname'] = $_POST['firstname'];
     $user['lastname'] = $_POST['lastname'];
     $user['phone'] = $_POST['phone'];
     $user['email'] = $_POST['email'];
@@ -27,5 +31,7 @@ if ($_POST && isset($_POST['firstname'])) {
         header("Location: /signup.php?error=Invalid user data"); // Redirect if there is an error in the registry
         exit();
     }
+    }
+    
 }
 ?>

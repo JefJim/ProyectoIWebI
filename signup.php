@@ -52,7 +52,9 @@
       <!-- Password -->
       <div>
         <label for="password" class="block text-sm font-medium text-green-900">Password</label>
-        <input id="password" class="mt-1 block w-full px-3 py-2 rounded-md border-0 shadow-sm ring-1 ring-inset ring-green-300 focus:ring-2 focus:ring-green-600 sm:text-sm" type="password" name="password" required>
+        <input id="password" 
+        class="mt-1 block w-full px-3 py-2 rounded-md border-0 shadow-sm ring-1 ring-inset ring-green-300 focus:ring-2 focus:ring-green-600 sm:text-sm" 
+        type="password" name="password" minlength="8" required >
       </div>
 
       <!-- Submit Button -->
