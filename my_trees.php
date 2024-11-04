@@ -52,7 +52,6 @@ $result = $stmt->get_result();
                 <tbody class="bg-white">
                     <?php
                     // Show the list of trees purchased by the user
-                    
                     if ($result->num_rows > 0) {
                         while ($tree = $result->fetch_assoc()) {
                             echo "<tr class='border-b'>
