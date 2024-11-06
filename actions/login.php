@@ -1,5 +1,5 @@
 <?php
-require('../utils/functions.php'); 
+require('../utils/functions.php');
 
 // Verify login
 if ($_POST) {
@@ -18,15 +18,15 @@ if ($_POST) {
         // Check if the user is an administrator
         if ($user['isAdmin'] == 1) {
             header('Location: /admin.php'); // Redirects to the admin page
-            exit(); 
-        } else {
+            exit();
+        }
+        else if ($user['isAdmin'] == 0) {
             header('Location: /users.php'); // Redirects to the friends page
-            exit(); 
+            exit();
         }
     } else {
         // Redirect to error page if authentication fails
         header('Location: /login_error.php');
-        exit(); 
+        exit();
     }
 }
-?>
